@@ -1,49 +1,31 @@
-# Ansible Role: ansible-apps_gobetween
+# Ansible Role: ansible-apps_akhq
 
 
 ## Description
 
-[![Build Status](https://travis-ci.com/lotusnoir/ansible-apps_gobetween.svg?branch=master)](https://travis-ci.com/lotusnoir/ansible-apps_gobetween)[![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)[![Ansible Role](https://img.shields.io/badge/ansible%20role-apps__gobetween-blue)](https://galaxy.ansible.com/lotusnoir/ansible-apps_gobetween/)[![GitHub tag](https://img.shields.io/badge/version-latest-blue)](https://github.com/lotusnoir/ansible-apps_gobetween/tags)
+[![Build Status](https://travis-ci.com/lotusnoir/ansible-apps_akhq.svg?branch=master)](https://travis-ci.com/lotusnoir/ansible-apps_akhq)[![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)[![Ansible Role](https://img.shields.io/badge/ansible%20role-apps__akhq-blue)](https://galaxy.ansible.com/lotusnoir/ansible-apps_akhq/)[![GitHub tag](https://img.shields.io/badge/version-latest-blue)](https://github.com/lotusnoir/ansible-apps_akhq/tags)
 
-Deploy [gobetween](https://github.com/yyyar/gobetween/releases) load balancer system using ansible.
+Deploy [akhq](https://github.com/tchiotludo/akhq) kafka admin system using ansible.
 
 
 ## Role variables
 
 | Name           | Default Value | Description                        |
 | -------------- | ------------- | -----------------------------------|
-| `gobetween_version` | 0.8.0 | gobetween version |
-| `gobetween_binary_file` | /usr/local/bin/gobetween | gobetween binary name|
-| `gobetween_install_dir` | /etc/gobetween | Config files path |
-| `gobetween_install_local` | false | allow to install a local version |
-| `gobetween_local_file` | "" | path to local gobetween binary file |
-| `ulimit` | 65536 | ulimit file limit|
-| `gobetween_log_path` | /var/log/gobetween.log | log path|
-| `gobetween_user` | gobetween | gobetween user |
-| `gobetween_target_servers` | ["localhost"] | |
-| `gobetween_log_level` | info | log level |
-| `gobetween_profiler` | false | expose profiler endpoint |
-| `gobetween_api` | false | expose api endpoint |
-| `gobetween_metrics` | true | expose prometheus metrics endpoint |
-| `gobetween_metrics_port` | 9101 | metrics endpoint port |
-| `gobetween_groups` | "" | servers to configure on gobetween.toml |
+| `akhq_version` | 0.15.0 | akhq version |
+| `akhq_install_dir` | /opt/akhq | Installation path for jar file |
+| `akhq_admin_passwd` | "securepassword" | admin password to access akhq |
+| `kafka_bootstrap_servers` | "" | list of kafka servers |
 
 ## Examples
 
 	---
-	- hosts: apps_gobetween
+	- hosts: apps_akhq
 	  become: yes
 	  become_method: sudo
 	  gather_facts: yes
 	  roles:
-	    - role: ansible-apps_gobetween
-	  vars:
-	    gobetween_version: "0.8.0"
-	    gobetween_install_dir: /etc/gobetween
-        gobetween_target_servers: "{{ groups['logs_servers'] }}"
-        gobetween_groups:
-          - {name: syslog, port: 514, protocol: udp, targets: "{{ gobetween_target_servers }}" }
-          - {name: snmp, port: 162, protocol: udp, targets: "{{ gobetween_target_servers }}" }
+	    - role: ansible-apps_akhq
 	  environment: 
 	    http_proxy: "{{ http_proxy }}"
 	    https_proxy: "{{ https_proxy }}"
