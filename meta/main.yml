@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: "Philippe leal"
+  description: "Install and configure akhq"
+  role_name: apps_akhq
+  license: "MIT"
+  min_ansible_version: 2.8
+
+  platforms:
+    - name: "Debian"
+      versions:
+        - "buster"
+        - "stretch"
+        - "jessie"
+
+  galaxy_tags:
+    - web
+    - kafka
+    - administration
+
+dependencies:
+  - { role: geerlingguy.java }

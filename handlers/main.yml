@@ -1,0 +1,5 @@
+---
+- name: "restart akhq"
+  service:
+    name: "akhq"
+    state: "restarted"
