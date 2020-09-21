@@ -7,6 +7,10 @@
 
 Deploy [akhq](https://github.com/tchiotludo/akhq) kafka admin system using ansible.
 
+## Dependencies
+
+You need to install java
+Recommanded role is geerlingguy.java
 
 ## Role variables
 
