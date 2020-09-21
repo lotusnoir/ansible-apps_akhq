@@ -26,6 +26,11 @@ Deploy [akhq](https://github.com/tchiotludo/akhq) kafka admin system using ansib
 	  gather_facts: yes
 	  roles:
 	    - role: ansible-apps_akhq
+      vars:
+        suffix: ':9092'
+        kafka_bootstrap_servers:
+          - name: kafka_cluster
+            servers: "{{ groups['kafka_cluster'] | product([suffix]) | map('join') | join(',') }}"
 	  environment: 
 	    http_proxy: "{{ http_proxy }}"
 	    https_proxy: "{{ https_proxy }}"

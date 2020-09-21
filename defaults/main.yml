@@ -7,5 +7,3 @@ akhq_admin_passwd: "securepasswd"
 kafka_bootstrap_servers:
   - name: cluster1
     servers: test1-01.prod.kosc.net:9092,test1-02.prod.kosc.net:9092
-  - name: kafka_server
-    servers: test2-01.prod.kosc.net:9092
