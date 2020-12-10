@@ -1,9 +1,18 @@
 ---
+# Install
 akhq_version: "0.15.0"
 akhq_jar_url: "https://github.com/tchiotludo/akhq/releases/download/{{ akhq_version }}/akhq.jar"
 akhq_install_dir: "/opt/akhq"
 
+# Configuration
 akhq_admin_passwd: "securepasswd"
 kafka_bootstrap_servers:
   - name: cluster1
-    servers: test1-01.prod.kosc.net:9092,test1-02.prod.kosc.net:9092
+    servers: test1-01.prod.exemple.net:9092,test1-02.prod.exemple.net:9092
+
+akhq_ldap_server: "ldap://ldap.exemple.neti:389"
+akhq_ldap_bindn: "uid=readonly,cn=users,cn=accounts,dc=exemple,dc=net"
+akhq_ldap_bindpwd: "readonly_passwd"
+akhq_ldap_search_base: "cn=users,cn=accounts,dc=kexemple,dc=net"
+akhq_ldap_group_enable: false
+akhq_ldap_group_base: "cn=groups,cn=accounts,dc=exemple,dc=net"

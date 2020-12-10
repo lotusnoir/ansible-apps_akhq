@@ -71,93 +71,76 @@ akhq:
 
 
 
-##micronaut:
-##  security:
-##    # Ldap authentificaton configuration
-##    ldap:
-##      default:
-##        enabled: true
-##        context:
-##          server: 'ldap://ldap.forumsys.com:389'
-##          managerDn: 'cn=read-only-admin,dc=example,dc=com'
-##          managerPassword: 'password'
-##        search:
-##          base: "dc=example,dc=com"
-##        groups:
-##          enabled: true
-##          base: "dc=example,dc=com"
-#
-#akhq:
-#  server:
-#    base-path: "" # if behind a reverse proxy, path to akhq without trailing slash (optional). Example: akhq is
-#                  # behind a reverse proxy with url http://my-server/akhq, set base-path: "/akhq".
-#                  # Not needed if you're behind a reverse proxy with subdomain http://akhq.my-server/
-#    access-log: # Access log configuration (optional)
-#      enabled: true # true by default
-#      name: org.akhq.log.access # Logger name
-#      format: "[Date: {}] [Duration: {} ms] [Url: {} {}] [Status: {}] [Ip: {}] [Length: {}] [Port: {}]" # Logger format
-#
-#  # default kafka properties for each clients, available for admin / producer / consumer (optional)
-#  clients-defaults:
-#    consumer:
-#      properties:
-#        isolation.level: read_committed
-#
-#  # list of kafka cluster available for akhq
+micronaut:
+  security:
+    # Ldap authentificaton configuration
+    ldap:
+      default:
+        enabled: true
+        context:
+          server: '{{ akhq_ldap_server }}'
+          managerDn: '{{ akhq_ldap_bindn }}'
+          managerPassword: '{{ akhq_ldap_bindpwd }}'
+        search:
+          base: "{{ akhq_ldap_search_base }}"
+        groups:
+          enabled: {{ akhq_ldap_group_enable }}
+          base: "{{ akhq_ldap_group_base }}"
+
 #  connections:
 #    kafka-net: # url friendly name for the cluster (letter, number, _, -, ... dot are not allowed here)
 #      properties: # standard kafka properties (optional)
-#        bootstrap.servers: "titi-01.kosc.net"
-##      schema-registry:
-##        url: "http://schema-registry:8085" # schema registry url (optional)
-##        # Basic Auth user / pass
-##        basic-auth-username: basic-auth-user
-##        basic-auth-password: basic-auth-pass
-##        properties: # standard kafka properties (optional)
-##          ssl.protocol: TLS
-##      connect:
-##        - name: connect-1
-##          url: "http://connect:8083"
-##          # Basic Auth user / pass (optional)
-##          basic-auth-username: basic-auth-user
-##          basic-auth-password: basic-auth-pass
-##          # ssl store configuration (optional)
-##          ssl-trust-store: /app/truststore.jks
-##          ssl-trust-store-password: trust-store-password
-##          ssl-key-store: /app/truststore.jks
-##          ssl-key-store-password: key-store-password
-##        - name: connect-2
-##          url: "http://connect:8084"
-##          # Basic Auth user / pass (optional)
-##          basic-auth-username: basic-auth-user
-##          basic-auth-password: basic-auth-pass
-##          # ssl store configuration (optional)
-##          ssl-trust-store: /app/truststore.jks
-##          ssl-trust-store-password: trust-store-password
-##          ssl-key-store: /app/truststore.jks
-##          ssl-key-store-password: key-store-password
-##
-##    my-cluster-ssl:
-##      properties:
-##        bootstrap.servers: "kafka:9093"
-##        security.protocol: SSL
-##        ssl.truststore.location: /app/truststore.jks
-##        ssl.truststore.password: password
-##        ssl.keystore.location: /app/keystore.jks
-##        ssl.keystore.password: password
-##        ssl.key.password: password
-##
-##    my-cluster-sasl:
-##      properties:
-##        bootstrap.servers: "kafka:9094"
-##        security.protocol: SASL_SSL
-##        sasl.mechanism: SCRAM-SHA-256
-##        sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="admin" password="password";
-##        ssl.truststore.location: /app/truststore.jks
-##        ssl.truststore.password: password
-##        ssl.keystore.location: /app/keystore.jks
-##        ssl.keystore.password: password
-##        ssl.key.password: password
+#        bootstrap.servers: "titi-01.exemple.net"
+#      schema-registry:
+#        url: "http://schema-registry:8085" # schema registry url (optional)
+#        # Basic Auth user / pass
+#        basic-auth-username: basic-auth-user
+#        basic-auth-password: basic-auth-pass
+#        properties: # standard kafka properties (optional)
+#          ssl.protocol: TLS
+#      connect:
+#        - name: connect-1
+#          url: "http://connect:8083"
+#          # Basic Auth user / pass (optional)
+#          basic-auth-username: basic-auth-user
+#          basic-auth-password: basic-auth-pass
+#          # ssl store configuration (optional)
+#          ssl-trust-store: /app/truststore.jks
+#          ssl-trust-store-password: trust-store-password
+#          ssl-key-store: /app/truststore.jks
+#          ssl-key-store-password: key-store-password
+#        - name: connect-2
+#          url: "http://connect:8084"
+#          # Basic Auth user / pass (optional)
+#          basic-auth-username: basic-auth-user
+#          basic-auth-password: basic-auth-pass
+#          # ssl store configuration (optional)
+#          ssl-trust-store: /app/truststore.jks
+#          ssl-trust-store-password: trust-store-password
+#          ssl-key-store: /app/truststore.jks
+#          ssl-key-store-password: key-store-password
+#
+#    my-cluster-ssl:
+#      properties:
+#        bootstrap.servers: "kafka:9093"
+#        security.protocol: SSL
+#        ssl.truststore.location: /app/truststore.jks
+#        ssl.truststore.password: password
+#        ssl.keystore.location: /app/keystore.jks
+#        ssl.keystore.password: password
+#        ssl.key.password: password
+#
+#    my-cluster-sasl:
+#      properties:
+#        bootstrap.servers: "kafka:9094"
+#        security.protocol: SASL_SSL
+#        sasl.mechanism: SCRAM-SHA-256
+#        sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="admin" password="password";
+#        ssl.truststore.location: /app/truststore.jks
+#        ssl.truststore.password: password
+#        ssl.keystore.location: /app/keystore.jks
+#        ssl.keystore.password: password
+#        ssl.key.password: password
 #
 #  pagination:
 #    page-size: 25 # number of elements per page (default : 25)
@@ -234,21 +217,21 @@ akhq:
 #          - admin
 #          - topic-reader
 #
-##    # Ldap Groups configuration (when using ldap)
-##    ldap:
-##      group:
-##        group-ldap-1: # just a key, no matter will be override by name below
-##          name: "group-ldap-1"
-##          groups: # Akhq groups list
-##            - topic-reader
-##        group-ldap-2:
-##          name: "group-ldap-2"
-##          groups:
-##            - admin
-##      user:
-##        riemann: # ldap user id
-##          groups: # Akhq groups list
-##            - topic-reader
-##        einstein:
-##          groups:
-##            - admin
+#    # Ldap Groups configuration (when using ldap)
+#    ldap:
+#      group:
+#        group-ldap-1: # just a key, no matter will be override by name below
+#          name: "group-ldap-1"
+#          groups: # Akhq groups list
+#            - topic-reader
+#        group-ldap-2:
+#          name: "group-ldap-2"
+#          groups:
+#            - admin
+#      user:
+#        riemann: # ldap user id
+#          groups: # Akhq groups list
+#            - topic-reader
+#        einstein:
+#          groups:
+#            - admin
