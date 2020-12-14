@@ -1,0 +1,13 @@
+---
+file:
+  /opt/akhq/akhq.jar:
+    exists: true
+    mode: "0644"
+  /etc/akhq/akhq.yml:
+    exists: true
+    mode: "0644"
+
+service:
+  akhq:
+    enabled: true
+    running: true
