@@ -29,7 +29,12 @@ Recommanded role is geerlingguy.java
 | `akhq_version`            | 0.15.0           | akhq version |
 | `akhq_install_dir`        | /opt/akhq        | Installation path for jar file |
 | `akhq_admin_passwd`       | "securepassword" | admin password to access akhq |
-| `kafka_bootstrap_servers` | ""               | list of kafka servers |
+| `akhq_ldap_server`        | ""               | ldap server |
+| `akhq_ldap_bindn`         | ""               | ldap user bindn |
+| `akhq_ldap_bindpwd`       | ""               | ldap user passwd |
+| `akhq_ldap_search_base`   | ""               | ldap search base |
+| `akhq_ldap_group_enable`  | ""               | ldap group check |
+| `akhq_ldap_group_base`    | ""               | ldap group base |
 
 ## Examples
 

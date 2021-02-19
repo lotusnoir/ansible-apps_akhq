@@ -25,6 +25,7 @@
       file:
         path: "{{ goss_test_directory }}"
         state: directory
+        mode: '0755'
 
     - name: Find Goss tests on localhost
       find:
@@ -49,6 +50,7 @@
       copy:
         src: "{{ item.path }}"
         dest: "{{ goss_test_directory }}/{{ item.path | basename }}"
+        mode: '0644'
       with_items:
         - "{{ test_files.files }}"
 

@@ -87,6 +87,19 @@ micronaut:
           enabled: {{ akhq_ldap_group_enable }}
           base: "{{ akhq_ldap_group_base }}"
 
+
+#Prometheus metrics
+endpoints:
+  all:
+    port: 9118
+    enabled: true
+    sensitive: false
+  health:
+    details-visible: ANONYMOUS
+  loggers:
+    write-sensitive: false
+
+
 #  connections:
 #    kafka-net: # url friendly name for the cluster (letter, number, _, -, ... dot are not allowed here)
 #      properties: # standard kafka properties (optional)
