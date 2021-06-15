@@ -55,14 +55,14 @@
 - name: "Create config file for akhq"
   template:
     src: akhq.yml.j2
-    dest: {{ akhq_config_dir }}/akhq.yml
+    dest: "{{ akhq_config_dir }}/akhq.yml"
     mode: 0644
   notify: "restart akhq"
 
 - name: "Create systemd init for akhq"
   template:
     src: akhq.service
-    dest: {{ lib_root_dir }}/systemd/system/
+    dest: "{{ lib_root_dir }}/systemd/system"
     mode: 0644
   notify: "restart akhq"
 
