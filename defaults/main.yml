@@ -11,7 +11,7 @@ lib_root_dir: "/lib"  # alternatively, /usr/lib
 
 # Configuration
 akhq_admin_passwd: "securepasswd"
-akhq_reader_password: "readonlypasswd"
+akhq_reader_password: "readpasswd"
 
 akhq_listener_port: 8081
 akhq_listener_ssl: false

@@ -43,6 +43,7 @@ Recommended role is geerlingguy.java
 | `akhq_listener_ssl`		| false			   | whether to enable SSL |
 | `akhq_listener_ssl_self_signed` | false      | whether to use a self-signed certificate for SSL |
 | `java_bin`       			| /bin/java 	   | location of java; typically /bin/java or /usr/bin/java |
+| `lib_root_dir`			| /lib			   | location of lib dir; typically /lib or /usr/lib |
 
 ## Examples
 
@@ -65,12 +66,13 @@ Recommended role is geerlingguy.java
           - name: kafka_cluster
             servers: "{{ groups['kafka_cluster'] | product([suffix]) | map('join') | join(',') }}"
 			custom_properties:
+			  # Connect to an mTLS-secured cluster
 			  security.protocol: SSL
 			  ssl.truststore.location: /var/ssl/private/truststore.jks
 			  ssl.truststore.password: trustStorePwd
 			  ssl.keystore.location: /var/ssl/private/keystore.jks
 			  ssl.keystore.password: keyStorePwd
-			  ssl.key.password: KeyStorePwd
+			  ssl.key.password: keyStorePwd
 	  environment: 
 	    http_proxy: "{{ http_proxy }}"
 	    https_proxy: "{{ https_proxy }}"
