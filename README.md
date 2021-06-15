@@ -39,10 +39,10 @@ Recommended role is geerlingguy.java
 | `akhq_ldap_group_enable`  | ""               | ldap group check |
 | `akhq_ldap_group_base`    | ""               | ldap group base |
 | `akhq_ldap_enabled`		| false			   | enable ldap authorization |
-| `java_bin`       			| /bin/java 	   | location of java; typically /bin/java or /usr/bin/java |
 | `akhq_listener_port` 		| 8081			   | port for the listener to use |
 | `akhq_listener_ssl`		| false			   | whether to enable SSL |
 | `akhq_listener_ssl_self_signed` | false      | whether to use a self-signed certificate for SSL |
+| `java_bin`       			| /bin/java 	   | location of java; typically /bin/java or /usr/bin/java |
 
 ## Examples
 
