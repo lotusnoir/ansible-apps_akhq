@@ -7,8 +7,24 @@ akhq:
 {% for key, val in cluster.custom_properties.items() %}
         {{ key }}: {{ val }}
 {% endfor %}
-
 {% endfor %}
+
+  # Auth & Roles
+  security:
+    default-group: no-roles # Forces login
+
+    # Basic auth configuration
+    basic-auth:
+      - username: admin
+        password: "{{ akhq_admin_pwd_256 }}"
+        passwordHash: SHA256
+        groups:
+        - admin
+      - username: reader
+        password: "{{ akhq_reader_pwd_256 }}"
+        passwordHash: SHA256
+        groups:
+        - reader
 
   server:
     base-path: "" # if behind a reverse proxy, path to akhq without trailing slash (optional). Example: akhq is
@@ -26,27 +42,10 @@ akhq:
     size: 50 # max record per page (default: 50)
     poll-timeout: 1000 # The time, in milliseconds, spent waiting in poll if data is not available in the buffer.
 
-  # Auth & Roles (optional)
-  security:
-    default-group: topic-reader # Default groups for all the user even unlogged user
-
-    # Basic auth configuration
-    basic-auth:
-      - username: admin
-        password: "{{ akhq_admin_pwd_256 }}" 
-        passwordHash: SHA256
-        groups: 
-        - admin
-      - username: reader
-        password: "{{ akhq_admin_pwd_256 }}"
-        passwordHash: SHA256
-        groups: 
-        - reader
-
-
 
 micronaut:
   security:
+    enabled: true
     # Ldap authentificaton configuration
     ldap:
       default:
@@ -60,12 +59,12 @@ micronaut:
         groups:
           enabled: {{ akhq_ldap_group_enable }}
           base: "{{ akhq_ldap_group_base }}"
-    # SSL endpoint configuration
-    ssl:
-      enabled: {{ akhq_listener_ssl }}
-      buildSelfSigned: {{ akhq_listener_ssl_self_signed }}
-      port: {{ akhq_listener_port }}
-      protocol: TLSv1.2
+  # SSL endpoint configuration
+  ssl:
+    enabled: {{ akhq_listener_ssl }}
+    buildSelfSigned: {{ akhq_listener_ssl_self_signed }}
+    protocol: TLSv1.2
+
 
 #Prometheus metrics
 endpoints:
