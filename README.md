@@ -55,7 +55,6 @@ Recommended role is geerlingguy.java
 	    - role: ansible-apps_akhq
       vars:
 	  	# enable SSL
-	  	akhq_listener_port: 9443
 		akhq_listener_ssl: true
 		akhq_listener_ssl_self_signed: true
 		akhq_admin_passwd: myAdminPwd
