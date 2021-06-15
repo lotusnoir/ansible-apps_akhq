@@ -20,7 +20,7 @@ Deploy [akhq](https://github.com/tchiotludo/akhq) kafka admin system using ansib
 ## Dependencies
 
 You need to install java
-Recommanded role is geerlingguy.java
+Recommended role is geerlingguy.java
 
 ## Role variables
 
@@ -28,13 +28,21 @@ Recommanded role is geerlingguy.java
 | ------------------------- | ---------------- | -----------------------------------|
 | `akhq_version`            | 0.15.0           | akhq version |
 | `akhq_install_dir`        | /opt/akhq        | Installation path for jar file |
-| `akhq_admin_passwd`       | "securepassword" | admin password to access akhq |
+| `akhq_config_dir`         | /etc/akhq        | Configuration path for application |
+| `akhq_jar_file`           | akhq.jar         | Name of the jar file |
+| `akhq_admin_passwd`       | "securepasswd"   | admin password to access akhq |
+| `akhq_reader_passwd`      | "readpasswd"     | read-only password to access akhq |
 | `akhq_ldap_server`        | ""               | ldap server |
 | `akhq_ldap_bindn`         | ""               | ldap user bindn |
 | `akhq_ldap_bindpwd`       | ""               | ldap user passwd |
 | `akhq_ldap_search_base`   | ""               | ldap search base |
 | `akhq_ldap_group_enable`  | ""               | ldap group check |
 | `akhq_ldap_group_base`    | ""               | ldap group base |
+| `akhq_ldap_enabled`		| false			   | enable ldap authorization |
+| `java_bin`       			| /bin/java 	   | location of java; typically /bin/java or /usr/bin/java |
+| `akhq_listener_port` 		| 8081			   | port for the listener to use |
+| `akhq_listener_ssl`		| false			   | whether to enable SSL |
+| `akhq_listener_ssl_self_signed` | false      | whether to use a self-signed certificate for SSL |
 
 ## Examples
 
@@ -46,14 +54,27 @@ Recommanded role is geerlingguy.java
 	  roles:
 	    - role: ansible-apps_akhq
       vars:
+	  	# enable SSL
+	  	akhq_listener_port: 9443
+		akhq_listener_ssl: true
+		akhq_listener_ssl_self_signed: true
+		akhq_admin_passwd: myAdminPwd
+		akhq_reader_passwd: myReaderPwd
         suffix: ':9092'
         kafka_bootstrap_servers:
           - name: kafka_cluster
             servers: "{{ groups['kafka_cluster'] | product([suffix]) | map('join') | join(',') }}"
+			custom_properties:
+			  security.protocol: SSL
+			  ssl.truststore.location: /var/ssl/private/truststore.jks
+			  ssl.truststore.password: trustStorePwd
+			  ssl.keystore.location: /var/ssl/private/keystore.jks
+			  ssl.keystore.password: keyStorePwd
+			  ssl.key.password: KeyStorePwd
 	  environment: 
 	    http_proxy: "{{ http_proxy }}"
 	    https_proxy: "{{ https_proxy }}"
-	    no_proxy: "{{ no_proxy }}
+	    no_proxy: "{{ no_proxy }}"
 
 ## License
 
