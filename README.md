@@ -26,7 +26,7 @@ Recommended role is geerlingguy.java
 
 | Name                      | Default Value    | Description                        |
 | ------------------------- | ---------------- | -----------------------------------|
-| `akhq_version`            | 0.15.0           | akhq version |
+| `akhq_version`            | 0.17.0           | akhq version |
 | `akhq_install_dir`        | /opt/akhq        | Installation path for jar file |
 | `akhq_config_dir`         | /etc/akhq        | Configuration path for application |
 | `akhq_jar_file`           | akhq.jar         | Name of the jar file |
