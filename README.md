@@ -48,33 +48,33 @@ Recommended role is geerlingguy.java
 
 	---
 	- hosts: apps_akhq
-	  become: yes
-	  become_method: sudo
-	  gather_facts: yes
-	  roles:
-	    - role: ansible-apps_akhq
+      become: yes
+      become_method: sudo
+      gather_facts: yes
+      roles:
+        - role: ansible-apps_akhq
       vars:
-	  	# enable SSL
-		akhq_listener_ssl: true
-		akhq_listener_ssl_self_signed: true
-		akhq_admin_passwd: myAdminPwd
-		akhq_reader_passwd: myReaderPwd
+      	# enable SSL
+    	akhq_listener_ssl: true
+    	akhq_listener_ssl_self_signed: true
+    	akhq_admin_passwd: myAdminPwd
+    	akhq_reader_passwd: myReaderPwd
         suffix: ':9092'
         kafka_bootstrap_servers:
           - name: kafka_cluster
             servers: "{{ groups['kafka_cluster'] | product([suffix]) | map('join') | join(',') }}"
-			custom_properties:
-			  # Connect to an mTLS-secured cluster
-			  security.protocol: SSL
-			  ssl.truststore.location: /var/ssl/private/truststore.jks
-			  ssl.truststore.password: trustStorePwd
-			  ssl.keystore.location: /var/ssl/private/keystore.jks
-			  ssl.keystore.password: keyStorePwd
-			  ssl.key.password: keyStorePwd
-	  environment: 
-	    http_proxy: "{{ http_proxy }}"
-	    https_proxy: "{{ https_proxy }}"
-	    no_proxy: "{{ no_proxy }}"
+            custom_properties:
+              # Connect to an mTLS-secured cluster
+              security.protocol: SSL
+              ssl.truststore.location: /var/ssl/private/truststore.jks
+              ssl.truststore.password: trustStorePwd
+              ssl.keystore.location: /var/ssl/private/keystore.jks
+              ssl.keystore.password: keyStorePwd
+              ssl.key.password: keyStorePwd
+      environment: 
+        http_proxy: "{{ http_proxy }}"
+        https_proxy: "{{ https_proxy }}"
+        no_proxy: "{{ no_proxy }}"
 
 ## License
 
