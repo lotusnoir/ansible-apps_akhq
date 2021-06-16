@@ -38,16 +38,16 @@ Recommended role is geerlingguy.java
 | `akhq_ldap_search_base`   | ""               | ldap search base |
 | `akhq_ldap_group_enable`  | ""               | ldap group check |
 | `akhq_ldap_group_base`    | ""               | ldap group base |
-| `akhq_ldap_enabled`		| false			   | enable ldap authorization |
-| `akhq_listener_ssl`		| false			   | whether to enable SSL |
+| `akhq_ldap_enabled`       | false            | enable ldap authorization |
+| `akhq_listener_ssl`       | false            | whether to enable SSL |
 | `akhq_listener_ssl_self_signed` | false      | whether to use a self-signed certificate for SSL |
-| `java_bin`       			| /bin/java 	   | location of java; typically /bin/java or /usr/bin/java |
-| `lib_root_dir`			| /lib			   | location of lib dir; typically /lib or /usr/lib |
+| `java_bin`                | /bin/java        | location of java; typically /bin/java or /usr/bin/java |
+| `lib_root_dir`            | /lib             | location of lib dir; typically /lib or /usr/lib |
 
 ## Examples
 
-	---
-	- hosts: apps_akhq
+    ---
+    - hosts: apps_akhq
       become: yes
       become_method: sudo
       gather_facts: yes
