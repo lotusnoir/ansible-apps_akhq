@@ -13,8 +13,23 @@ lib_root_dir: "/lib"  # alternatively, /usr/lib
 akhq_admin_passwd: "securepasswd"
 akhq_reader_password: "readpasswd"
 
+akhq_service_user: akhq
+akhq_service_group: akhq
+
 akhq_listener_ssl: false
 akhq_listener_ssl_self_signed: false
+
+akhq_keystore_filepath: ""
+akhq_keystore_password: ""
+akhq_keystore_type: PKCS12 # JKS or PKCS12
+akhq_truststore_filepath: ""
+akhq_truststore_password: ""
+akhq_truststore_type: PKCS12 # JKS or PKCS12
+
+akhq_jwt_secret: "pleaseChangeThisSecretForANewOne"
+
+akhq_prometheus_enabled: true
+akhq_endpoint_port: 9118
 
 kafka_bootstrap_servers:
   - name: cluster1

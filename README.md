@@ -41,6 +41,17 @@ Recommended role is geerlingguy.java
 | `akhq_ldap_enabled`       | false            | enable ldap authorization |
 | `akhq_listener_ssl`       | false            | whether to enable SSL |
 | `akhq_listener_ssl_self_signed` | false      | whether to use a self-signed certificate for SSL |
+| `akhq_keystore_filepath`  | ""               | file:/path/to/keystore.jks |
+| `akhq_keystore_password`  | ""               | password for the JKS keystore |
+| `akhq_keystore_type`      | PKCS12           | keystore type (JKS or PKCS12) |
+| `akhq_truststore_filepath` | ""              | file:/path/to/truststore.jks |
+| `akhq_truststore_password` | ""              | password for the JKS truststore |
+| `akhq_truststore_type`    | PKCS12           | truststore type (JKS or PKCS12) |
+| `akhq_jwt_secret`         | pleaseChangeThisSecretForANewOne | change this value for every deployment |
+| `akhq_prometheus_enabled` | rue             | whether to enable the prometheus metric exporter endpoint |
+| `akhq_endpoint_port`      | 9118             | port to expose the metric endpoint on |
+| `akhq_service_user`       | akhq             | user to run the service as |
+| `akhq_service_group`      | akhq             | group to assign to the service user |
 | `java_bin`                | /bin/java        | location of java; typically /bin/java or /usr/bin/java |
 | `lib_root_dir`            | /lib             | location of lib dir; typically /lib or /usr/lib |
 

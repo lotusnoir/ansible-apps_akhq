@@ -5,6 +5,8 @@ Description=Manage Java service
 WorkingDirectory={{ akhq_install_dir }}
 ExecStart={{ java_bin }} -Dmicronaut.config.files={{ akhq_config_dir }}/akhq.yml -jar {{ akhq_jar_file }}
 Type=simple
+User={{ akhq_service_user }}
+Group={{ akhq_service_group }}
 Restart=on-failure
 RestartSec=10
 SuccessExitStatus=143

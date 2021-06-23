@@ -46,6 +46,14 @@ akhq:
 micronaut:
   security:
     enabled: true
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          secret:
+            generator:
+              secret: {{ akhq_jwt_secret }}
+              jws-algorithm: HS256
     # Ldap authentificaton configuration
     ldap:
       default:
@@ -64,18 +72,35 @@ micronaut:
     enabled: {{ akhq_listener_ssl }}
     buildSelfSigned: {{ akhq_listener_ssl_self_signed }}
     protocol: TLSv1.2
+    keyStore:
+      path: {{ akhq_keystore_filepath }}
+      password: {{ akhq_keystore_password }}
+      type: {{ akhq_truststore_type }}
+    trustStore:
+      path: {{ akhq_truststore_filepath }}
+      password: {{ akhq_truststore_password }}
+      type: {{ akhq_truststore_type }}
+  #Prometheus metrics
+{% if akhq_prometheus_enabled %}
+  metrics:
+    enabled: true
+    export:
+      prometheus:
+        enabled: true
+        step: PT1M
+        descriptions: true
 
 
-#Prometheus metrics
 endpoints:
   all:
-    port: 9118
+    port: {{ akhq_endpoint_port }}
     enabled: true
     sensitive: false
   health:
     details-visible: ANONYMOUS
   loggers:
     write-sensitive: false
+{% endif %}
 
 
 #  connections:
