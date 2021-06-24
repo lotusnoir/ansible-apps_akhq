@@ -1,7 +1,7 @@
 ---
 - name: "Check for akhq jar file"
   stat:
-    path: "{{ akhq_install_dir }}/akhq.jar"
+    path: "{{ akhq_install_dir }}/{{ akhq_jar_file }}"
   changed_when: false
   register: akhq_jar
 
@@ -15,41 +15,54 @@
 
     - name: "Ensure configuration directory exists"
       file:
-        path: '/etc/akhq/'
+        path: '{{ akhq_config_dir }}'
         state: directory
         mode: '0755'
 
     - name: "Download akhq jar file..."
       get_url:
         url: '{{ akhq_jar_url }}'
-        dest: "{{ akhq_install_dir }}/akhq.jar"
+        dest: "{{ akhq_install_dir }}/{{ akhq_jar_file }}"
         timeout: 120
         mode: 0644
 
-- name: "Convert passwd with sha256"
+- name: "Convert admin passwd with sha256"
   shell: |
     set -o pipefail
     echo -n "{{ akhq_admin_passwd }}" | sha256sum
   args:
     executable: /bin/bash
-  register: akhq_pwd
+  register: akhq_admin_pwd
   changed_when: false
 
 - name: "Set variable password converted with sha256"
   set_fact:
-    akhq_pwd_256: "{{ akhq_pwd.stdout.split(' ')[0] }}"
+    akhq_admin_pwd_256: "{{ akhq_admin_pwd.stdout.split(' ')[0] }}"
+
+- name: "Convert reader passwd with sha256"
+  shell: |
+    set -o pipefail
+    echo -n "{{ akhq_reader_passwd }}" | sha256sum
+  args:
+    executable: /bin/bash
+  register: akhq_reader_pwd
+  changed_when: false
+
+- name: "Set variable password converted with sha256"
+  set_fact:
+    akhq_reader_pwd_256: "{{ akhq_reader_pwd.stdout.split(' ')[0] }}"
 
 - name: "Create config file for akhq"
   template:
     src: akhq.yml.j2
-    dest: /etc/akhq/akhq.yml
+    dest: "{{ akhq_config_dir }}/akhq.yml"
     mode: 0644
   notify: "restart akhq"
 
 - name: "Create systemd init for akhq"
   template:
     src: akhq.service
-    dest: /lib/systemd/system/
+    dest: "{{ lib_root_dir }}/systemd/system"
     mode: 0644
   notify: "restart akhq"
 
