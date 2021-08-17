@@ -1,41 +1,4 @@
 ---
-### INCLUDE META
-- name: Include roles' meta data
-  include_vars:
-    file: "{{ role_path }}/meta/main.yml"
-
-### TEST DISTRIB
-- name: Test the distribution is supported. End the host if not.
-  set_fact:
-    supported_distributions: "{{ galaxy_info.platforms|json_query('[].name') }}"
-- debug:
-    var: supported_distributions
-- block:
-    - debug:
-        msg: "{{ ansible_distribution }} not supported. End of host."
-    - meta: end_host
-  when: ansible_distribution not in supported_distributions
-
-### TEST RELEASE
-- name: Test the release is supported. End the host if not.
-  set_fact:
-    supported_releases: "{{ (galaxy_info.platforms| selectattr('name', 'match', ansible_distribution)| list|first).versions }}"
-- debug:
-    var: supported_releases
-- block:
-    - debug:
-        msg: "{{ ansible_distribution_release}} not supported. End of host."
-    - meta: end_host
-  when: ansible_distribution_release not in supported_releases
-
-- name: The distribution and release is supported. Continue play.
-  debug:
-    msg: "{{ ansible_distribution }} {{ ansible_distribution_release }} is supported. Continue play."
-
-### PLAY ROLE
-- name: Import play tasks
-  import_tasks: play.yml
-
 - name: "Check for akhq jar file"
   stat:
     path: "{{ akhq_install_dir }}/akhq.jar"
@@ -55,6 +18,11 @@
         path: '/etc/akhq/'
         state: directory
         mode: '0755'
+
+    - name: "Install requierements"
+      package:
+        name: "ca-certificates"
+        state: present
 
     - name: "Download akhq jar file..."
       get_url:
