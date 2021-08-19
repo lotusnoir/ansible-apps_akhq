@@ -5,4 +5,4 @@
   any_errors_fatal: true
 
   roles:
-    - apps_akhq
+    - role: apps_akhq

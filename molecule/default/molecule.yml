@@ -3,11 +3,6 @@ dependency:
   name: galaxy
 driver:
   name: docker
-# lint: |
-#   set -e
-#   yamllint .
-#   ansible-lint
-#   flake8
 platforms:
   - name: bionic
     pre_build_image: true
@@ -37,6 +32,13 @@ platforms:
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: bullseye
+    pre_build_image: true
+    image: geerlingguy/docker-debian11-ansible #cant start service
+    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
   - name: centos7
     pre_build_image: true
     image: quay.io/paulfantom/molecule-systemd:centos-7
@@ -53,6 +55,13 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     groups:
       - python3
+  - name: rocky8
+    pre_build_image: true
+    image: geerlingguy/docker-rockylinux8-ansible:latest
+    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
   - name: fedora
     pre_build_image: true
     image: quay.io/paulfantom/molecule-systemd:fedora-30
@@ -71,5 +80,9 @@ provisioner:
     group_vars:
       python3:
         ansible_python_interpreter: /usr/bin/python3
+    host_vars:
+      bullseye:
+        ansible_python_interpreter: "/usr/bin/python3.9"
+
 verifier:
-  name: testinfra
+  name: goss

@@ -59,7 +59,7 @@
   notify: "restart akhq"
 
 - name: "Start akhq.service"
-  systemd:
+  service:
     name: akhq
     state: started
     enabled: true
