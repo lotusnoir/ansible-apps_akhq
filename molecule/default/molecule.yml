@@ -32,45 +32,45 @@ platforms:
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: bullseye
-    pre_build_image: true
-    image: geerlingguy/docker-debian11-ansible #cant start service
-    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: centos7
-    pre_build_image: true
-    image: quay.io/paulfantom/molecule-systemd:centos-7
-    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: centos8
-    pre_build_image: true
-    image: quay.io/paulfantom/molecule-systemd:centos-8
-    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    groups:
-      - python3
-  - name: rocky8
-    pre_build_image: true
-    image: geerlingguy/docker-rockylinux8-ansible:latest
-    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: fedora
-    pre_build_image: true
-    image: quay.io/paulfantom/molecule-systemd:fedora-30
-    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    groups:
-      - python3
+#- name: bullseye
+#  pre_build_image: true
+#  image: geerlingguy/docker-debian11-ansible #cant start service
+#  docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+#  privileged: true
+#  volumes:
+#    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#- name: centos7
+#  pre_build_image: true
+#  image: quay.io/paulfantom/molecule-systemd:centos-7
+#  docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+#  privileged: true
+#  volumes:
+#    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#- name: centos8
+#  pre_build_image: true
+#  image: quay.io/paulfantom/molecule-systemd:centos-8
+#  docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+#  privileged: true
+#  volumes:
+#    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#  groups:
+#    - python3
+#- name: rocky8
+#  pre_build_image: true
+#  image: geerlingguy/docker-rockylinux8-ansible:latest
+#  docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+#  privileged: true
+#  volumes:
+#    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#- name: fedora
+#  pre_build_image: true
+#  image: quay.io/paulfantom/molecule-systemd:fedora-30
+#  docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+#  privileged: true
+#  volumes:
+#    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#  groups:
+#    - python3
 provisioner:
   name: ansible
   playbooks:
