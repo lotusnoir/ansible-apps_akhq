@@ -3,9 +3,22 @@
   stat:
     path: "{{ akhq_install_dir }}/akhq.jar"
   changed_when: false
-  register: akhq_jar
+  register: akhq_install
 
-- when: not akhq_jar.stat.exists
+- name: "Get current version"
+  shell: |
+    set -o pipefail
+    grep @version /etc/akhq/akhq.yml | awk '{print $NF}'
+  args:
+    executable: /bin/bash
+  changed_when: false
+  register: akhq_install_version
+  when: akhq_install.stat.exists
+
+- debug:
+    msg: "{{ akhq_install_version }} - {{ akhq_install_version.stdout }}"
+
+- when: (not akhq_install.stat.exists) or (akhq_install_version is defined and akhq_version not in akhq_install_version.stdout)
   block:
     - name: "Ensure install directory exists"
       file:

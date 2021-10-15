@@ -10,9 +10,19 @@ kafka_bootstrap_servers:
   - name: cluster1
     servers: test1-01.prod.exemple.net:9092,test1-02.prod.exemple.net:9092
 
+akhq_ldap_enable: true
 akhq_ldap_server: "ldap://ldap.exemple.net:389"
 akhq_ldap_bindn: "uid=readonly,cn=users,cn=accounts,dc=exemple,dc=net"
 akhq_ldap_bindpwd: "readonly_passwd"
 akhq_ldap_search_base: "cn=users,cn=accounts,dc=kexemple,dc=net"
-akhq_ldap_group_enable: false
+akhq_ldap_search_attribute: "uid"
+akhq_ldap_group_enable: true
 akhq_ldap_group_base: "cn=groups,cn=accounts,dc=exemple,dc=net"
+akhq_ldap_group_filter: "member={0}"
+akhq_ldap_auth: ""
+#akhq_ldap_auth: |
+#  - name: devops
+#    groups:
+#      - admin
+akhq_prometheus_enable: true
+akhq_prometheus_port: 9118
