@@ -5,8 +5,8 @@
 [![Galaxy Role](https://img.shields.io/badge/galaxy-apps_akhq-purple?style=flat)](https://galaxy.ansible.com/lotusnoir/apps_akhq)
 [![Version](https://img.shields.io/github/release/lotusnoir/ansible-apps_akhq.svg)](https://github.com/lotusnoir/ansible-apps_akhq/releases/latest)
 ![GitHub repo size](https://img.shields.io/github/repo-size/lotusnoir/ansible-apps_akhq?color=orange&style=flat)
-[![downloads](https://img.shields.io/ansible/role/d/52300)](https://galaxy.ansible.com/lotusnoir/apps_akhq)
-![Ansible Quality Score](https://img.shields.io/ansible/quality/52300)
+[![downloads](https://img.shields.io/ansible/role/d/53225)](https://galaxy.ansible.com/lotusnoir/apps_akhq)
+![Ansible Quality Score](https://img.shields.io/ansible/quality/53225)
 [![License](https://img.shields.io/badge/license-Apache--2.0-brightgreen?style=flat)](https://opensource.org/licenses/Apache-2.0)
 
 
