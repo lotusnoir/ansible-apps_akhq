@@ -3,7 +3,7 @@ Description=Manage Java service
 
 [Service]
 WorkingDirectory={{ akhq_install_dir }}
-ExecStart=/bin/java -Dmicronaut.config.files=/etc/akhq/akhq.yml -jar akhq.jar
+ExecStart={{ akhq_java_path }} -Dmicronaut.config.files=/etc/akhq/akhq.yml -jar akhq.jar
 Type=simple
 Restart=on-failure
 RestartSec=10

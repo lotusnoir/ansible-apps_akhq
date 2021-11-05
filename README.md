@@ -15,7 +15,7 @@ Deploy [akhq](https://github.com/tchiotludo/akhq) kafka admin system using ansib
 ## Dependencies
 
 You need to install java
-Recommanded role is geerlingguy.java
+Recommanded role is lotusnoir.apps_java
 
 ## Role variables
 

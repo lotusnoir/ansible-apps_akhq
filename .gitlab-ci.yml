@@ -1,0 +1,182 @@
+---
+stages:
+  - checks
+  - test
+  - push
+
+variables:
+  GITHUB_USER: lotusnoir
+
+
+##################################################
+# SYNTAX CHECKS
+##################################################
+yamllint:
+  stage: checks
+  image: sdesbure/yamllint
+  before_script:
+    - yamllint --version
+  script:
+    - yamllint .
+
+ansible-lint:
+  stage: checks
+  image: lotusnoir/ansible_play
+  script:
+    - ansible-lint .
+
+#######################################################
+## RUN ROLE ON DIFFERENTS OS (dont work cause systemd not pid1 on gitlab-runenr)
+#######################################################
+#centos7:
+#  stage: test
+#  needs:
+#    - yamllint
+#    - ansible-lint
+#  image:
+#    name: lotusnoir/ansible_molecule_test_images:centos7
+#    entrypoint: [""]
+#  before_script:
+#    - ansible --version
+#  script:
+#    - ansible-galaxy install -r requirements.yml
+#    - cd ..
+#    - ansible-playbook ansible-apps_akhq/playbook.yml
+#
+#centos8:
+#  stage: test
+#  needs:
+#    - yamllint
+#    - ansible-lint
+#  image:
+#    name: lotusnoir/ansible_molecule_test_images:centos8
+#    entrypoint: [""]
+#  before_script:
+#    - ansible --version
+#  script:
+#    - ansible-galaxy install -r requirements.yml
+#    - cd ..
+#    - ansible-playbook ansible-apps_akhq/playbook.yml
+#
+#debian10:
+#  stage: test
+#  needs:
+#    - yamllint
+#    - ansible-lint
+#  image:
+#    name: lotusnoir/ansible_molecule_test_images:debian10
+#    entrypoint: [""]
+#  before_script:
+#    - ansible --version
+#  script:
+#    - ansible-galaxy install -r requirements.yml
+#    - cd ..
+#    - ansible-playbook ansible-apps_akhq/playbook.yml
+#
+#debian11:
+#  stage: test
+#  needs:
+#    - yamllint
+#    - ansible-lint
+#  image:
+#    name: lotusnoir/ansible_molecule_test_images:debian11
+#    entrypoint: [""]
+#  before_script:
+#    - ansible --version
+#  script:
+#    - ansible-galaxy install -r requirements.yml
+#    - cd ..
+#    - ansible-playbook ansible-apps_akhq/playbook.yml
+#
+#rocky8:
+#  stage: test
+#  needs:
+#    - yamllint
+#    - ansible-lint
+#  image:
+#    name: lotusnoir/ansible_molecule_test_images:rocky8
+#    entrypoint: [""]
+#  before_script:
+#    - ansible --version
+#  script:
+#    - ansible-galaxy install -r requirements.yml
+#    - cd ..
+#    - ansible-playbook ansible-apps_akhq/playbook.yml
+#
+#ubuntu18:
+#  stage: test
+#  needs:
+#    - yamllint
+#    - ansible-lint
+#  image:
+#    name: lotusnoir/ansible_molecule_test_images:ubuntu18
+#    entrypoint: [""]
+#  before_script:
+#    - ansible --version
+#  script:
+#    - ansible-galaxy install -r requirements.yml
+#    - cd ..
+#    - ansible-playbook ansible-apps_akhq/playbook.yml
+#
+#ubuntu20:
+#  stage: test
+#  needs:
+#    - yamllint
+#    - ansible-lint
+#  image:
+#    name: lotusnoir/ansible_molecule_test_images:ubuntu20
+#    entrypoint: [""]
+#  before_script:
+#    - ansible --version
+#  script:
+#    - ansible-galaxy install -r requirements.yml
+#    - cd ..
+#    - ansible-playbook ansible-apps_akhq/playbook.yml
+
+
+######################################################
+# RUN MOLECULE FOR FULL TEST SCENARIO
+######################################################
+molecule:
+  stage: test
+  image: lotusnoir/molecule_play
+  services:
+    - docker:dind
+  variables:
+    PY_COLORS: 1
+  needs:
+    - yamllint
+    - ansible-lint
+  before_script:
+    - molecule --version
+  script:
+    - molecule test
+
+
+##################################################
+# PUSH CODE WHEN ALL TEST OK
+##################################################
+push_src_on_github:
+  stage: push
+  image: alpine:latest
+  needs:
+    - molecule
+  before_script:
+    - apk add git openssh-client
+    - eval $(ssh-agent -s)
+    - echo "${GITHUB_USER_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo -e "Host *\n\tUser ansible\n\tStrictHostKeyChecking no\n\tForwardAgent yes\n\n" > ~/.ssh/config
+    - git config --global user.email "${GITHUB_USER_EMAIL}"
+    - git config --global user.name "${GITHUB_USER}"
+    - git config --global init.defaultBranch main
+    - COMMENT=$(git log -1 --pretty=%B | head -1)
+  script:
+    - git clone git@github.com:${GITHUB_USER}/ansible-apps_akhq.git /tmp/ansible-apps_akhq
+    - rm -rf .git
+    - cp -r . /tmp/ansible-apps_akhq/
+    - cd /tmp/ansible-apps_akhq
+    - git add -A
+    - git commit -m "${COMMENT}" || echo "No changes, nothing to commit!"
+    - git push

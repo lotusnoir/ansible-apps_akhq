@@ -15,9 +15,6 @@
   register: akhq_install_version
   when: akhq_install.stat.exists
 
-- debug:
-    msg: "{{ akhq_install_version }} - {{ akhq_install_version.stdout }}"
-
 - when: (not akhq_install.stat.exists) or (akhq_install_version is defined and akhq_version not in akhq_install_version.stdout)
   block:
     - name: "Ensure install directory exists"

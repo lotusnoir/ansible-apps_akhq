@@ -3,6 +3,7 @@
 akhq_version: "0.18.0"
 akhq_jar_url: "https://github.com/tchiotludo/akhq/releases/download/{{ akhq_version }}/akhq.jar"
 akhq_install_dir: "/opt/akhq"
+akhq_java_path: "/usr/bin/java"
 
 # Configuration
 akhq_admin_passwd: "securepasswd"
