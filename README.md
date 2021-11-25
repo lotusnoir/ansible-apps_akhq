@@ -9,47 +9,34 @@
 ![Ansible Quality Score](https://img.shields.io/ansible/quality/53225)
 [![License](https://img.shields.io/badge/license-Apache--2.0-brightgreen?style=flat)](https://opensource.org/licenses/Apache-2.0)
 
-
 Deploy [akhq](https://github.com/tchiotludo/akhq) kafka admin system using ansible.
 
-## Dependencies
+## Requirements
 
-You need to install java
-Recommanded role is lotusnoir.apps_java
+You need to install java - lotusnoir.apps_java
 
 ## Role variables
 
-| Name                      | Default Value    | Description                        |
-| ------------------------- | ---------------- | -----------------------------------|
-| `akhq_version`            | 0.18.0           | akhq version |
-| `akhq_install_dir`        | /opt/akhq        | Installation path for jar file |
-| `akhq_admin_passwd`       | "securepassword" | admin password to access akhq |
-| `akhq_ldap_server`        | ""               | ldap server |
-| `akhq_ldap_bindn`         | ""               | ldap user bindn |
-| `akhq_ldap_bindpwd`       | ""               | ldap user passwd |
-| `akhq_ldap_search_base`   | ""               | ldap search base |
-| `akhq_ldap_group_enable`  | ""               | ldap group check |
-| `akhq_ldap_group_base`    | ""               | ldap group base |
+See [variables](/defaults/main.yml) for more details.
 
 ## Examples
 
-	---
-	- hosts: apps_akhq
-	  become: yes
-	  become_method: sudo
-	  gather_facts: yes
-	  roles:
-	    - role: ansible-apps_akhq
-         vars:
-           suffix: ':9092'
-           kafka_bootstrap_servers:
-             - name: kafka_cluster
-               servers: "{{ groups['kafka_cluster'] | product([suffix]) | map('join') | join(',') }}"
-   	  environment: 
-   	    http_proxy: "{{ http_proxy }}"
-   	    https_proxy: "{{ https_proxy }}"
-   	    no_proxy: "{{ no_proxy }}
+        ---
+        - hosts: apps_akhq
+          become: true
+          become_method: sudo
+          gather_facts: true
+          roles:
+            - role: ansible-apps_akhq
+          vars:
+            suffix: ':9092'
+            kafka_bootstrap_servers:
+              - name: kafka_cluster
+                servers: "{{ groups['kafka_cluster'] | product([suffix]) | map('join') | join(',') }}"
+
+
 
 ## License
 
 This project is licensed under Apache License. See [LICENSE](/LICENSE) for more details.
+

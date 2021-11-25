@@ -2,8 +2,8 @@
 galaxy_info:
   author: lotusnoir
   role_name: apps_akhq
-  description: "Install and configure kafka administration web tool akhq"
-  license: "license: Apache License, Version 2.0"
+  description: "Deploy [akhq](https://github.com/tchiotludo/akhq) kafka admin system using ansible."
+  license: "Apache License, Version 2.0"
   min_ansible_version: 2.8
 
   platforms:
@@ -15,7 +15,9 @@ galaxy_info:
       versions:
         - "bullseye"
         - "buster"
-        - "stretch"
+    - name: "RedHat"
+      versions:
+        - "Maipo"
     - name: "CentOS"
       versions:
         - "8"
@@ -30,4 +32,3 @@ galaxy_info:
     - administration
 
 dependencies: []
-#  - { role: lotusnoir.apps_java }
