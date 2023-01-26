@@ -1,5 +1,5 @@
 ---
 - name: "restart akhq"
-  service:
+  ansible.builtin.service:
     name: "akhq"
     state: "restarted"

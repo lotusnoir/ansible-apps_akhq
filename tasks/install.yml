@@ -1,12 +1,12 @@
 ---
 - name: "Check for akhq jar file"
-  stat:
+  ansible.builtin.stat:
     path: "{{ akhq_install_dir }}/akhq.jar"
   changed_when: false
   register: akhq_install
 
 - name: "Get current version"
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     grep @version /etc/akhq/akhq.yml | awk '{print $NF}'
   args:
@@ -15,34 +15,35 @@
   register: akhq_install_version
   when: akhq_install.stat.exists
 
-- when: (not akhq_install.stat.exists) or (akhq_install_version is defined and akhq_version not in akhq_install_version.stdout)
+- name: "Install tasks"
+  when: (not akhq_install.stat.exists) or (akhq_install_version is defined and akhq_version not in akhq_install_version.stdout)
   block:
     - name: "Ensure install directory exists"
-      file:
+      ansible.builtin.file:
         path: '{{ akhq_install_dir }}'
         state: directory
         mode: '0755'
 
     - name: "Ensure configuration directory exists"
-      file:
+      ansible.builtin.file:
         path: '/etc/akhq/'
         state: directory
         mode: '0755'
 
     - name: "Install requierements"
-      package:
+      ansible.builtin.package:
         name: "ca-certificates"
         state: present
 
     - name: "Download akhq jar file..."
-      get_url:
+      ansible.builtin.get_url:
         url: '{{ akhq_jar_url }}'
         dest: "{{ akhq_install_dir }}/akhq.jar"
         timeout: 120
         mode: 0644
 
 - name: "Convert passwd with sha256"
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     echo -n "{{ akhq_admin_passwd }}" | sha256sum
   args:
@@ -51,25 +52,25 @@
   changed_when: false
 
 - name: "Set variable password converted with sha256"
-  set_fact:
+  ansible.builtin.set_fact:
     akhq_pwd_256: "{{ akhq_pwd.stdout.split(' ')[0] }}"
 
 - name: "Create config file for akhq"
-  template:
+  ansible.builtin.template:
     src: akhq.yml.j2
     dest: /etc/akhq/akhq.yml
     mode: 0644
   notify: "restart akhq"
 
 - name: "Create systemd init for akhq"
-  template:
+  ansible.builtin.template:
     src: akhq.service
     dest: /lib/systemd/system/
     mode: 0644
   notify: "restart akhq"
 
 - name: "Start akhq.service"
-  service:
+  ansible.builtin.service:
     name: akhq
     state: started
     enabled: true
