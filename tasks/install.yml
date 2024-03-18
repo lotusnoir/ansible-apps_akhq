@@ -60,14 +60,14 @@
     src: akhq.yml.j2
     dest: /etc/akhq/akhq.yml
     mode: 0644
-  notify: "restart akhq"
+  notify: "Restart akhq"
 
 - name: "Create systemd init for akhq"
   ansible.builtin.template:
     src: akhq.service
     dest: /lib/systemd/system/
     mode: 0644
-  notify: "restart akhq"
+  notify: "Restart akhq"
 
 - name: "Start akhq.service"
   ansible.builtin.service:
