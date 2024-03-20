@@ -15,14 +15,6 @@ scenario:
     #- verify
     - destroy
 platforms:
-  - name: apps-akhq-ubuntu18
-    pre_build_image: true
-    image: lotusnoir/ansible_molecule_test_images:ubuntu18
-    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
-    privileged: true
-    capabilities: ['NET_ADMIN']
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - name: apps-akhq-ubuntu20
     pre_build_image: true
     image: lotusnoir/ansible_molecule_test_images:ubuntu20
@@ -33,6 +25,14 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     groups:
       - python3
+  - name: apps-akhq-ubuntu18
+    pre_build_image: true
+    image: lotusnoir/ansible_molecule_test_images:ubuntu18
+    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+    privileged: true
+    capabilities: ['NET_ADMIN']
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - name: apps-akhq-debian10
     pre_build_image: true
     image: lotusnoir/ansible_molecule_test_images:debian10

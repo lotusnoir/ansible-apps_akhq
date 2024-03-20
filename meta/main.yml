@@ -9,8 +9,8 @@ galaxy_info:
   platforms:
     - name: "Ubuntu"
       versions:
-        - "focal"
         - "bionic"
+        - "focal"
     - name: "Debian"
       versions:
         - "buster"
