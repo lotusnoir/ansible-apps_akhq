@@ -24,12 +24,13 @@
 Deploy [akhq](https://github.com/tchiotludo/akhq) kafka admin system using ansible.
 ## Requirements
 
-none
+You need to install java - lotusnoir.apps_java
 
 ## Role variables
 
 See [variables](/defaults/main.yml) for more details.
 
+{'suffix': ':9092', 'kafka_bootstrap_servers': [{'name': 'kafka_cluster', 'servers': "{{ groups['kafka_cluster'] | product([suffix]) | map('join') | join(',') }}"}]}
 ## Examples
 
         ---
