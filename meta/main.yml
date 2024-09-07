@@ -9,8 +9,8 @@ galaxy_info:
   platforms:
     - name: "Ubuntu"
       versions:
-        - "focal"
         - "jammy"
+        - "focal"
     - name: "Debian"
       versions:
         - "buster"
@@ -19,8 +19,13 @@ galaxy_info:
     - name: "Rocky"
       versions:
         - "8"
+        - "9"
     - name: "OracleLinux"
       versions:
+        - "9"
+    - name: "RedHat"
+      versions:
+        - "8"
         - "9"
 
   galaxy_tags:
