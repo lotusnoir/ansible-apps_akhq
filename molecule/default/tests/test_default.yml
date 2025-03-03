@@ -11,7 +11,6 @@ service:
   akhq:
     enabled: true
     running: true
-
-#http:
-#  http://localhost:8080:
-#    status: 200
+# http:
+#   http://localhost:8080:
+#     status: 200
