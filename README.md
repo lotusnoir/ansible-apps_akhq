@@ -22,9 +22,10 @@
 ## Description
 
 Deploy [akhq](https://github.com/tchiotludo/akhq) kafka admin system using ansible.
+
 ## Requirements
 
-You need to install java - lotusnoir.apps_java
+['lotusnoir.apps_java']
 
 ## Role variables
 
@@ -40,7 +41,6 @@ See [variables](/defaults/main.yml) for more details.
           gather_facts: true
           roles:
             - role: ansible-apps_akhq
-
 
 ## License
 
